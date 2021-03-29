@@ -1,19 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/myfit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="myvarible"
+            type="com.example.myretrofit.mycontrol.MyViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+
+            <ImageView
+                android:id="@+id/mybackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/cleardaysky" />
+
+            <SearchView
+                android:id="@+id/myserchview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/myradius"
+                android:backgroundTint="@color/white"
+                app:layout_constraintLeft_toLeftOf="@id/myserchview"
+                app:layout_constraintTop_toTopOf="parent" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="75dp"
+                android:orientation="vertical"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/myserchview">
+
+                <RelativeLayout
+                    android:id="@+id/relevi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="right"
+                        android:text="31"
+                        android:textColor="@color/white"
+                        android:textSize="100sp" />
+
+                    <TextView
+                        android:id="@+id/yu"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignLeft="@id/clec"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="O"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/clec"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/yu"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/temp"
+                        android:gravity="center"
+                        android:text="C"
+                        android:textColor="@color/white"
+                        android:textSize="70sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/relevi"
+                        android:layout_toRightOf="@id/clec"
+                        android:gravity="center"
+                        android:minWidth="200dp"
+                        android:text="thunderstorm with light drizzle"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:ignore="NotSibling" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/secretiv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="50dp">
+
+                    <TextView
+                        android:id="@+id/max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Temp Max :100"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/deg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/max"
+                        android:layout_toRightOf="@id/max"
+                        android:gravity="center"
+                        android:text="o"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/smallc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/deg"
+                        android:layout_toRightOf="@id/deg"
+                        android:gravity="center"
+                        android:text="C"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/max"
+                        android:layout_marginTop="34dp"
+                        android:text="Temp Min  :100"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/degsec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/min"
+                        android:layout_toRightOf="@id/min"
+                        android:gravity="center"
+                        android:text="o"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/degsec"
+                        android:layout_toRightOf="@id/degsec"
+                        android:gravity="center"
+                        android:text="C"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/press"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/min"
+                        android:layout_marginTop="34dp"
+                        android:text="Pressure    :100"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/humid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/press"
+                        android:layout_marginTop="34dp"
+                        android:text="Humidity    :100"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/wind"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/humid"
+                        android:layout_marginTop="34dp"
+                        android:text="Wind Speed:100"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/windgust"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/wind"
+                        android:layout_marginTop="34dp"
+                        android:text="Gust Wind   :100"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@id/smallc"
+                        android:gravity="center"
+                        android:text=" Country :IN"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/count"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="34dp"
+                        android:layout_toRightOf="@id/smallc"
+                        android:gravity="center"
+                        android:text="City :Ballia"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/longti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/city"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="34dp"
+                        android:layout_toRightOf="@id/press"
+
+                        android:gravity="center"
+                        android:text="Longitude:00.0000"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lati"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/longti"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="34dp"
+                        android:layout_toRightOf="@id/humid"
+                        android:gravity="center"
+                        android:text="Latitude:00.0000"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
