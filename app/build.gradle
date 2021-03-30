@@ -69,5 +69,6 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     //okhttps
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
-
+//Image lib
+    implementation("io.coil-kt:coil:1.0.0-rc3")
 }
