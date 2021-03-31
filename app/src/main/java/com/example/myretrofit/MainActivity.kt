@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.SearchView
@@ -17,6 +19,7 @@ import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.myretrofit.databinding.ActivityMainBinding
+import com.example.myretrofit.databinding.ActivityMainBinding.inflate
 import com.example.myretrofit.mycontrol.MyViewFactory
 import com.example.myretrofit.mycontrol.MyViewModel
 import com.example.myretrofit.repos.Repository
@@ -44,12 +47,13 @@ class MainActivity : AppCompatActivity() {
         myViewModel._snackbar.observe(this, {
             it.getContentIfNotHandled()
                 ?.let {
-                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                     if (it == "Data Downloaded Successfully") {
                         binding.clec.visibility = View.VISIBLE
                         binding.yu.visibility = View.VISIBLE
                         binding.secretiv.visibility = View.VISIBLE
                     }
+                    else
+                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                 }
         })
         binding.myserchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -116,6 +120,16 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater=MenuInflater(this)
+        inflater.inflate(R.menu.dot_menu,menu)
+        val editMnu = menu?.findItem(R.id.edithis)
+        editMnu?.setOnMenuItemClickListener {
+            Toast.makeText(this, "you clicked me", Toast.LENGTH_SHORT).show()
+            return@setOnMenuItemClickListener true
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
 
     private suspend fun getBitmap(string: String): Bitmap? {
         binding.myprogress.visibility = View.VISIBLE

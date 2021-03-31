@@ -42,9 +42,6 @@ class MyViewModel(private val repository: Repository) :ViewModel() {
         desc.value = "No Data Found"
     }
 
-
-
-
     fun setData(response: Response<WeatherData>, desc: String)
     {
         if (!response.isSuccessful)
@@ -66,25 +63,7 @@ class MyViewModel(private val repository: Repository) :ViewModel() {
         lati.value="Latitude:"+response.body()?.coord?.lat.toString()
         _snackbar.value= Event("Data Downloaded Successfully")
     }
-    /*    val myinstance: LiveData<Response<WeatherData>> = liveData {
-        val oop = RetrofitInstance.api.getmyweather("Patna")
-        emit(oop)
-    }*/
-/*fun inital()
-    {
-        temp.value = "-0"
-        desc.value = "not data found 😥"
-        maxTemp.value = ""
-        minTemp.value = ""
-        press.value = ""
-        Humid.value = ""
-        windspeed.value = ""
-        GustWind.value = ""
-        countryname.value = " "
-        cityname.value = ""
-        lon.value = ""
-        lati.value = ""
-}*/
+
     fun getsMyData(string: String):LiveData<Response<WeatherData>> {
         return  liveData {
             try {
