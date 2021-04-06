@@ -19,7 +19,6 @@ import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.myretrofit.databinding.ActivityMainBinding
-import com.example.myretrofit.databinding.ActivityMainBinding.inflate
 import com.example.myretrofit.mycontrol.MyViewFactory
 import com.example.myretrofit.mycontrol.MyViewModel
 import com.example.myretrofit.repos.Repository
@@ -46,14 +45,14 @@ class MainActivity : AppCompatActivity() {
         setmydata()
         myViewModel._snackbar.observe(this, {
             it.getContentIfNotHandled()
-                ?.let {
-                    if (it == "Data Downloaded Successfully") {
+                ?.let {op->
+                    if (op == "Data Downloaded Successfully") {
                         binding.clec.visibility = View.VISIBLE
                         binding.yu.visibility = View.VISIBLE
                         binding.secretiv.visibility = View.VISIBLE
                     }
                     else
-                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, op, Toast.LENGTH_SHORT).show()
                 }
         })
         binding.myserchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -132,17 +131,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun getBitmap(string: String): Bitmap? {
-        binding.myprogress.visibility = View.VISIBLE
+        //binding.myprogress.visibility = View.VISIBLE
         val loading = ImageLoader(this)
         val request = ImageRequest.Builder(this)
             .data(string)
             .build()
         return try {
             val result = (loading.execute(request) as SuccessResult).drawable
-            binding.myprogress.visibility = View.GONE
+            //binding.myprogress.visibility = View.GONE
             (result as BitmapDrawable).bitmap
         } catch (e: Exception) {
-            binding.myprogress.visibility = View.GONE
+            //binding.myprogress.visibility = View.GONE
             Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
             null
         }
