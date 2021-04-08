@@ -1,10 +1,14 @@
 package com.example.myretrofit
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -15,18 +19,23 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.*
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.myretrofit.databinding.ActivityMainBinding
 import com.example.myretrofit.mycontrol.MyViewFactory
 import com.example.myretrofit.mycontrol.MyViewModel
+import com.example.myretrofit.mywork.DisplayNotification
 import com.example.myretrofit.repos.Repository
+import com.example.myretrofit.uitls.MyDialog
+import com.example.myretrofit.uitls.MyHelperInter
 import com.example.myretrofit.uitls.Myhelperclass
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
+import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MyHelperInter {
     private lateinit var binding: ActivityMainBinding
     private lateinit var myViewModel: MyViewModel
     private lateinit var myViewFactory: MyViewFactory
@@ -37,21 +46,27 @@ class MainActivity : AppCompatActivity() {
         AnimationUtils.loadAnimation(this, R.anim.fade_in)
     }
 
+    companion object {
+        var notifyicon: String = "01d"
+        var notifydesc: String = ""
+        var notifytemp: String = "23 celsius"
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         myViewModelFun()
         setmydata()
+        mydialogfun()
         myViewModel._snackbar.observe(this, {
             it.getContentIfNotHandled()
-                ?.let {op->
+                ?.let { op ->
                     if (op == "Data Downloaded Successfully") {
                         binding.clec.visibility = View.VISIBLE
                         binding.yu.visibility = View.VISIBLE
                         binding.secretiv.visibility = View.VISIBLE
-                    }
-                    else
+                    } else
                         Toast.makeText(this, op, Toast.LENGTH_SHORT).show()
                 }
         })
@@ -99,6 +114,30 @@ class MainActivity : AppCompatActivity() {
         binding.myvarible = myViewModel
     }
 
+    private fun NotifMyResult() {
+        val data = Data.Builder()
+            .putString("wedescp", notifydesc)
+            .putString("wetemp", notifytemp)
+            .putString("weicon", notifyicon)
+            .build()
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresBatteryNotLow(true)
+            .build()
+        val showWorker =
+            PeriodicWorkRequest.Builder(DisplayNotification::class.java, 16, TimeUnit.MINUTES)
+                .setInputData(data)
+                .setConstraints(constraints)
+                .build()
+        WorkManager.getInstance(this).enqueue(showWorker)
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(showWorker.id).observe(
+            this,
+            {
+                Log.i("MyWORK",it.state.toString())
+            })
+
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun setmydata(string: String = "Ballia") {
         myViewModel.getsMyData(string).observe(this, {
@@ -107,8 +146,15 @@ class MainActivity : AppCompatActivity() {
                 it.body()?.weather?.iterator()?.forEach { op ->
                     desc = op.description
                     Myhelperclass.myIcons[op.icon]?.let { str -> setDemo(str) }
+                    notifyicon = op.icon
+                    notifydesc = desc
                 }
                 myViewModel.setData(it, desc)
+                myViewModel.temp.observe(this, { temp ->
+                    if (!temp.isNullOrEmpty())
+                        notifytemp = "$temp°C"
+                })
+                NotifMyResult()
             } else {
                 Toast.makeText(
                     this,
@@ -119,9 +165,26 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun mydialogfun() {
+        val myDialog = MyDialog()
+        myDialog.show(supportFragmentManager, "MY dialog")
+        myDialog.isCancelable = false
+        myDialog.myHelperInter=this
+        /*if (MyDialog.myintend!=null)
+        {
+            val list: List<ResolveInfo> =
+                packageManager.queryIntentActivities(MyDialog.myintend!!, PackageManager.MATCH_DEFAULT_ONLY)
+            if (list.isNotEmpty()) {
+            startActivity(intent)
+        }*/
+        /*}
+        else
+            Toast.makeText(this, "it is empty", Toast.LENGTH_SHORT).show()*/
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater=MenuInflater(this)
-        inflater.inflate(R.menu.dot_menu,menu)
+        val inflater = MenuInflater(this)
+        inflater.inflate(R.menu.dot_menu, menu)
         val editMnu = menu?.findItem(R.id.edithis)
         editMnu?.setOnMenuItemClickListener {
             Toast.makeText(this, "you clicked me", Toast.LENGTH_SHORT).show()
@@ -138,12 +201,26 @@ class MainActivity : AppCompatActivity() {
             .build()
         return try {
             val result = (loading.execute(request) as SuccessResult).drawable
-            //binding.myprogress.visibility = View.GONE
             (result as BitmapDrawable).bitmap
         } catch (e: Exception) {
             //binding.myprogress.visibility = View.GONE
             Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
             null
         }
+    }
+
+    override fun callStart(intent: Intent?) {
+        if (intent != null) {
+            val list: List<ResolveInfo> =
+                packageManager.queryIntentActivities(
+                    intent,
+                    PackageManager.MATCH_DEFAULT_ONLY
+                )
+
+            if (list.isNotEmpty()) {
+                startActivity(intent)
+            }
+        } /*else
+            Toast.makeText(this, "it is empty", Toast.LENGTH_SHORT).show()*/
     }
 }

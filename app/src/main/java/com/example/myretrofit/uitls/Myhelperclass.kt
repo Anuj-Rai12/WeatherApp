@@ -1,8 +1,10 @@
 package com.example.myretrofit.uitls
 
+import com.example.myretrofit.R
+
 class Myhelperclass {
     companion object {
-        const val BaseUrl="https://api.openweathermap.org/data/2.5/"
+        const val BaseUrl = "https://api.openweathermap.org/data/2.5/"
         val myIcons = mapOf(
             "01d" to "https://images.unsplash.com/photo-1516571999955-7ef6c7885017?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
             "02d" to "https://images.unsplash.com/photo-1613090956335-e9330f8ff73d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
@@ -23,6 +25,25 @@ class Myhelperclass {
             "13n" to "https://iphonewalls.net/wp-content/uploads/2014/11/Snow%20Park%20Bench%20Light%20Pole%20iPhone%206%20Wallpaper-320x480.jpg",
             "50n" to "https://images.unsplash.com/photo-1611439302326-3279b5e31829?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
         )
-
+        val notificationIcons = mapOf(
+            "01d" to R.mipmap.day,
+            "02d" to R.mipmap.sunwithclouds,
+            "03d" to R.mipmap.clouds,
+            "04d" to R.mipmap.brokenclouds,
+            "09d" to R.mipmap.showerain,
+            "10d" to R.mipmap.rainday,
+            "11d" to R.mipmap.thunderstrom,
+            "13d" to R.mipmap.snow,
+            "50d" to R.mipmap.mist,
+            "01n" to R.mipmap.night,
+            "02n" to R.mipmap.nightwithclouds,
+            "03n" to R.mipmap.clouds,
+            "04n" to R.mipmap.brokenclouds,
+            "09n" to R.mipmap.showerain,
+            "10n" to R.mipmap.nightrain,
+            "11n" to R.mipmap.thunderstrom,
+            "13n" to R.mipmap.snow,
+            "50n" to R.mipmap.mist
+            )
     }
 }
