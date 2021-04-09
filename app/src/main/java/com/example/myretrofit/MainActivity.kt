@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -32,7 +34,6 @@ import com.example.myretrofit.mywork.DisplayNotification
 import com.example.myretrofit.repos.Repository
 import com.example.myretrofit.room.RoomData
 import com.example.myretrofit.room.RoomDataInstance
-import com.example.myretrofit.uitls.Event
 import com.example.myretrofit.uitls.MyDialog
 import com.example.myretrofit.uitls.MyHelperInter
 import com.example.myretrofit.uitls.Myhelperclass
@@ -62,6 +63,13 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+       //For to visible in Dark Mode
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (mode == Configuration.UI_MODE_NIGHT_YES) {
+            (this as AppCompatActivity?)!!.supportActionBar!!.setBackgroundDrawable(
+                ColorDrawable(resources.getColor(R.color.chreeyred,null))
+            )
+        }
         myViewModelFun()
         myViewModel._snackbar.observe(this, {
             it.getContentIfNotHandled()
@@ -77,7 +85,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         binding.myserchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-                    setmydata(query)
+                    setmydata(query,false)
                     return true
                 }
                 return false
@@ -124,7 +132,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
             } else {
                 arrayList.clear()
                 arrayList.addAll(it)
-                setmydata(arrayList.first().location_name)
+                setmydata(arrayList.first().location_name,true)
             }
         })
 
@@ -155,7 +163,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun setmydata(string: String = "Ballia") {
+    private fun setmydata(string: String = "Ballia", flags: Boolean) {
         myViewModel.getsMyData(string).observe(this, {
             if (it.isSuccessful) {
                 var desc = "Not Data Found"
@@ -171,6 +179,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
                     if (!temp.isNullOrEmpty())
                         notifytemp = "Feel's Like $temp°C"
                 })
+                if (flags)
                 NotifMyResult()
             } else {
                 Toast.makeText(
@@ -199,7 +208,8 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
             return@setOnMenuItemClickListener true
         }
         delMnu?.setOnMenuItemClickListener {
-            myViewModel.deletAll(false, null)
+            myViewModel.deletAll()
+            cityname=null
             finishAndRemoveTask()
             return@setOnMenuItemClickListener true
         }
@@ -207,7 +217,6 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     }
 
     private suspend fun getBitmap(string: String): Bitmap? {
-        //binding.myprogress.visibility = View.VISIBLE
         val loading = ImageLoader(this)
         val request = ImageRequest.Builder(this)
             .data(string)
@@ -216,7 +225,6 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
             val result = (loading.execute(request) as SuccessResult).drawable
             (result as BitmapDrawable).bitmap
         } catch (e: Exception) {
-            //binding.myprogress.visibility = View.GONE
             Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
             null
         }
@@ -224,10 +232,6 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
 
     private fun myBottomsheet(b: Boolean) {
         if (b) {
-            /*myViewModel.allData.observe(this, {
-                if (it.isNotEmpty())
-                    cityname = it.first().location_name
-            })*/
             if (arrayList.isNotEmpty())
                 cityname=arrayList.first().location_name
         }
@@ -247,10 +251,6 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
             if (list.isNotEmpty()) {
                 startActivity(intent)
             }
-            /*myViewModel.allData.observe(this, {
-                if (it.isNotEmpty())
-                    myViewModel.updateAuto(it.first())
-            })*/
             if (arrayList.isNotEmpty())
                 myViewModel.updateAuto(arrayList.first())
         }
@@ -261,24 +261,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     override fun sendData(string: String, flags: Boolean) {
         if (string.equals("enter the correct Option", true))
             Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
-        /*else if (string.equals("deleterecord", true) && flags) {
-            *//*myViewModel.allData.observe(this,
-                {
-                    if (it.isNotEmpty())
-                        myViewModel.deletAll(flags, it.first())
-                })*//*
-            *//*        if (arrayList.isNotEmpty())
-                        myViewModel.deletAll(flags,arrayList.first())
-            finishAndRemoveTask()*//*
-        }*/ else {
-            /*myViewModel.allData.observe(this,
-                {
-                    if (it.isNotEmpty())
-                        myViewModel.insertLocation(string, flags, it.first())
-                    else
-                        myViewModel.insertLocation(string, flags, null)
-
-                })*/
+         else {
             if (arrayList.isEmpty())
                 myViewModel.insertLocation(string,flags,null)
             else

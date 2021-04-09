@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyRetrofit</string>
+    <string name="app_name">Weather Report</string>
     <string name="choose_option">Enter the CityName</string>
     <string name="city_hint">Ballia</string>
     <string name="btn_create">ADD</string>

@@ -20,7 +20,6 @@ class Repository(private val myDao: MyDao) {
 
     suspend fun updateLocation(roomData: RoomData): Unit = myDao.updateLocation(roomData)
 
-    suspend fun deleteLocation(roomData: RoomData): Unit = myDao.deleteLocation(roomData)
 
     suspend fun deleteAllLocation(): Unit = myDao.deleteAll()
 

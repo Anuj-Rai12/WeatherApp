@@ -11,8 +11,6 @@ interface MyDao {
     @Update
     suspend fun updateLocation(roomData: RoomData)
 
-    @Delete
-    suspend fun deleteLocation(roomData: RoomData)
 
     @Query("Select *from Location_Table")
      fun displayLocation():LiveData<List<RoomData>>

@@ -30,15 +30,12 @@ class MyBottomSheet : BottomSheetDialogFragment() {
         binding.createloc.setOnClickListener {
             validateRes(binding.mycity.text.toString())?.let {
                 if(MainActivity.cityname!=null)
-                myHelperInter?.sendData(it,true)
+                myHelperInter?.sendData(it,true)//update walla
                 else
-                myHelperInter?.sendData(it,false)
+                myHelperInter?.sendData(it,false)//insert walla
                 dismiss()
             }
         }
-        /*binding.deleteLoc.setOnClickListener {
-            myHelperInter?.sendData("DeleteRecord",true)
-        }*/
         return binding.root
     }
 
