@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
+import com.example.myretrofit.MainActivity
 import com.example.myretrofit.R
 import com.example.myretrofit.databinding.MybottomsheetBinding
 import com.example.myretrofit.uitls.MyHelperInter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class MyBottomSheet : BottomSheetDialogFragment() {
-    private lateinit var binding: MybottomsheetBinding
+     private lateinit var binding: MybottomsheetBinding
     var myHelperInter: MyHelperInter? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,14 +21,24 @@ class MyBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.mybottomsheet, container, false)
-//        binding.mybottonsheet.setBackgroundColor(resources.getColor(R.color.chreeyred,null))
+        MainActivity.cityname?.let {
+            binding.mybottonsheettitile.text="Your CityName"
+            binding.mycity.setText(it)
+            binding.createloc.text="Update"
+//            binding.deleteLoc.visibility=View.VISIBLE
+        }
         binding.createloc.setOnClickListener {
             validateRes(binding.mycity.text.toString())?.let {
-                myHelperInter?.sendData(it)
+                if(MainActivity.cityname!=null)
+                myHelperInter?.sendData(it,true)
+                else
+                myHelperInter?.sendData(it,false)
                 dismiss()
             }
-            myHelperInter?.sendData("Enter the correct option")
         }
+        /*binding.deleteLoc.setOnClickListener {
+            myHelperInter?.sendData("DeleteRecord",true)
+        }*/
         return binding.root
     }
 

@@ -62,8 +62,9 @@ class DisplayNotification(context: Context, workerParams: WorkerParameters) :
                 .setContentTitle(name)
                 .setContentText(desc)
                 .setAutoCancel(true)
+                .setLargeIcon(MainActivity.bitmapval)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(it, 4)
+                .setSmallIcon(it)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .build()
         }

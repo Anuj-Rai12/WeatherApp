@@ -77,6 +77,40 @@ class MyViewModel(private val repository: Repository) :ViewModel() {
             }
         }
     }
+    fun insertLocation(cityname: String, flags: Boolean, obj: RoomData?){
+        if (!flags)//false
+        {
+            getLocation(RoomData(0, cityname, 0))
+            _snackbar.value = Event("City Is Added Successfully")
+        }
+        else{
+            if (obj!=null) {
+                updateLocation(RoomData(obj.id, cityname, obj.per))
+                _snackbar.value = Event("Updated the location,successfully")
+            }
+        }
+    }
+    fun deletAll(boolean: Boolean,obj: RoomData?)
+    {
+        if (!boolean)
+        {
+        deleteAll()
+        _snackbar.value= Event("Your Location is Deleted")
+            return
+        }
+        else
+        {
+            obj?.let {
+                deleteOneLocation(it)
+                _snackbar.value= Event("Record is Deleted")
+            }
+        }
+    }
+        fun updateAuto(obj: RoomData)
+        {
+            updateLocation(RoomData(obj.id,obj.location_name,1))
+            _snackbar.value=Event("ok")
+        }
     private fun degree(kelvin: Double): String {
         return (kelvin - 273.15f).roundToInt().toString()
     }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
@@ -31,6 +32,7 @@ import com.example.myretrofit.mywork.DisplayNotification
 import com.example.myretrofit.repos.Repository
 import com.example.myretrofit.room.RoomData
 import com.example.myretrofit.room.RoomDataInstance
+import com.example.myretrofit.uitls.Event
 import com.example.myretrofit.uitls.MyDialog
 import com.example.myretrofit.uitls.MyHelperInter
 import com.example.myretrofit.uitls.Myhelperclass
@@ -43,6 +45,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     private lateinit var myViewModel: MyViewModel
     private lateinit var myViewFactory: MyViewFactory
     private lateinit var repository: Repository
+    private  var arrayList= ArrayList<RoomData>()
     private val fadeAnimation by lazy {
         AnimationUtils.loadAnimation(this, R.anim.fade_in)
     }
@@ -50,17 +53,20 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     private var notifydesc: String = "checking for Weather"
     private var notifytemp: String = "Updating.."
 
+    companion object {
+        var bitmapval: Bitmap? = null
+        var cityname: String? = null
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         myViewModelFun()
-        setmydata()
-        mydialogfun()
         myViewModel._snackbar.observe(this, {
             it.getContentIfNotHandled()
                 ?.let { op ->
-                    if (op == "Data Downloaded Successfully") {
+                    if (op.equals("Data Downloaded Successfully", true)) {
                         binding.clec.visibility = View.VISIBLE
                         binding.yu.visibility = View.VISIBLE
                         binding.secretiv.visibility = View.VISIBLE
@@ -71,7 +77,6 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         binding.myserchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-                    //  myViewModel.inital()
                     setmydata(query)
                     return true
                 }
@@ -112,6 +117,17 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         myViewFactory = MyViewFactory(repository)
         myViewModel = ViewModelProvider(this, myViewFactory).get(MyViewModel::class.java)
         binding.myvarible = myViewModel
+        myViewModel.allData.observe(this, {
+            if (it.isEmpty()) {
+                mydialogfun()
+                myBottomsheet(false)
+            } else {
+                arrayList.clear()
+                arrayList.addAll(it)
+                setmydata(arrayList.first().location_name)
+            }
+        })
+
     }
 
     private fun NotifMyResult() {
@@ -147,6 +163,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
                     desc = op.description
                     Myhelperclass.myIcons[op.icon]?.let { str -> setDemo(str) }
                     notifyicon = op.icon
+                    bitmapval = convertImage(Myhelperclass.notificationIcons[op.icon]!!)
                     notifydesc = desc
                 }
                 myViewModel.setData(it, desc)
@@ -170,16 +187,6 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         myDialog.show(supportFragmentManager, "MY dialog")
         myDialog.isCancelable = false
         myDialog.myHelperInter = this
-        /*if (MyDialog.myintend!=null)
-        {
-            val list: List<ResolveInfo> =
-                packageManager.queryIntentActivities(MyDialog.myintend!!, PackageManager.MATCH_DEFAULT_ONLY)
-            if (list.isNotEmpty()) {
-            startActivity(intent)
-        }*/
-        /*}
-        else
-            Toast.makeText(this, "it is empty", Toast.LENGTH_SHORT).show()*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -188,11 +195,12 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         val editMnu = menu?.findItem(R.id.edithis)
         val delMnu = menu?.findItem(R.id.deletit)
         editMnu?.setOnMenuItemClickListener {
-            myBottomsheet()
+            myBottomsheet(true)
             return@setOnMenuItemClickListener true
         }
         delMnu?.setOnMenuItemClickListener {
-            Toast.makeText(this, "Ruko Jara Sbar Kro", Toast.LENGTH_SHORT).show()
+            myViewModel.deletAll(false, null)
+            finishAndRemoveTask()
             return@setOnMenuItemClickListener true
         }
         return super.onCreateOptionsMenu(menu)
@@ -214,9 +222,18 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         }
     }
 
-    private fun myBottomsheet() {
+    private fun myBottomsheet(b: Boolean) {
+        if (b) {
+            /*myViewModel.allData.observe(this, {
+                if (it.isNotEmpty())
+                    cityname = it.first().location_name
+            })*/
+            if (arrayList.isNotEmpty())
+                cityname=arrayList.first().location_name
+        }
         val myBottomSheet = MyBottomSheet()
-        myBottomSheet.myHelperInter=this
+        myBottomSheet.myHelperInter = this
+        myBottomSheet.isCancelable = b
         myBottomSheet.show(supportFragmentManager, "My_Bottom_Sheet")
     }
 
@@ -230,14 +247,42 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
             if (list.isNotEmpty()) {
                 startActivity(intent)
             }
+            /*myViewModel.allData.observe(this, {
+                if (it.isNotEmpty())
+                    myViewModel.updateAuto(it.first())
+            })*/
+            if (arrayList.isNotEmpty())
+                myViewModel.updateAuto(arrayList.first())
         }
     }
 
-    override fun sendData(string: String) {
-        if (string.equals("enter the correct optioN",true))
-            Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
-        else
-            Toast.makeText(this, "Successfully $string", Toast.LENGTH_SHORT).show()
+    private fun convertImage(it: Int): Bitmap = BitmapFactory.decodeResource(resources, it)
 
+    override fun sendData(string: String, flags: Boolean) {
+        if (string.equals("enter the correct Option", true))
+            Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+        /*else if (string.equals("deleterecord", true) && flags) {
+            *//*myViewModel.allData.observe(this,
+                {
+                    if (it.isNotEmpty())
+                        myViewModel.deletAll(flags, it.first())
+                })*//*
+            *//*        if (arrayList.isNotEmpty())
+                        myViewModel.deletAll(flags,arrayList.first())
+            finishAndRemoveTask()*//*
+        }*/ else {
+            /*myViewModel.allData.observe(this,
+                {
+                    if (it.isNotEmpty())
+                        myViewModel.insertLocation(string, flags, it.first())
+                    else
+                        myViewModel.insertLocation(string, flags, null)
+
+                })*/
+            if (arrayList.isEmpty())
+                myViewModel.insertLocation(string,flags,null)
+            else
+                myViewModel.insertLocation(string,flags,arrayList.first())
+        }
     }
 }
