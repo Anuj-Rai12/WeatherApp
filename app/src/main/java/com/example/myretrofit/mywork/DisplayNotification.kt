@@ -20,7 +20,7 @@ class DisplayNotification(context: Context, workerParams: WorkerParameters) :
 
     private var notificationManager: NotificationManager? = null
     private val channelId = "com.example.myretrofit.mywork"
-    private var todayWeather = "Feel's Like "
+    private var todayWeather:String?=null
     override fun doWork(): Result {
         notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -29,8 +29,10 @@ class DisplayNotification(context: Context, workerParams: WorkerParameters) :
         val geTemp = inputData.getString("wetemp").toString()
         val getIcon = inputData.getString("weicon").toString()
         return try {
-            todayWeather += geTemp
-            createNotification(todayWeather, getDesc, getIcon)
+            todayWeather = geTemp
+            todayWeather?.let {
+                createNotification(it, getDesc, getIcon)
+            }
             Result.success()
         } catch (e: Exception) {
             Result.failure()

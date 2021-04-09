@@ -13,7 +13,7 @@ class MyDialog : AppCompatDialogFragment() {
      var myHelperInter: MyHelperInter? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val alterdaialog = AlertDialog.Builder(activity).setTitle("AutoStart permission")
-            .setMessage("This App need autoStart permission so,Press yes to start.\nIf you have given so \n Please ignore.")
+            .setMessage("This App need autoStart permission so,Press yes to start.\nIf you have given so Please ignore.")
             .setPositiveButton("yes") { dialog, which ->
                 myHelperInter?.callStart(mystartauto())
             }

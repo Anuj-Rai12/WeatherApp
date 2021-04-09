@@ -5,4 +5,7 @@
     <item android:id="@+id/edithis"
         android:title="Location"
         app:showAsAction="never"/>
+    <item android:id="@+id/deletit"
+        android:title="Delete Location"
+        app:showAsAction="never"/>
 </menu>

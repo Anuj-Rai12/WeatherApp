@@ -1,17 +1,18 @@
 package com.example.myretrofit.mycontrol
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.example.myretrofit.model.WeatherData
 import com.example.myretrofit.repos.Repository
+import com.example.myretrofit.room.RoomData
 import com.example.myretrofit.uitls.Event
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import retrofit2.Response
 import kotlin.math.roundToInt
 
 class MyViewModel(private val repository: Repository) :ViewModel() {
-
+//Get all the data base
+    val allData=repository.daoAll
     val temp = MutableLiveData<String>()
 
     var desc = MutableLiveData<String>()
@@ -78,5 +79,17 @@ class MyViewModel(private val repository: Repository) :ViewModel() {
     }
     private fun degree(kelvin: Double): String {
         return (kelvin - 273.15f).roundToInt().toString()
+    }
+    private fun getLocation(roomData: RoomData):Job=viewModelScope.launch{
+        repository.getLocation(roomData)
+    }
+    private fun updateLocation(roomData: RoomData):Job=viewModelScope.launch {
+        repository.updateLocation(roomData)
+    }
+    private fun deleteOneLocation(roomData: RoomData):Job=viewModelScope.launch {
+        repository.deleteLocation(roomData)
+    }
+    private fun deleteAll():Job=viewModelScope.launch {
+        repository.deleteAllLocation()
     }
 }

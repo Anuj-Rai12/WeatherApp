@@ -5,6 +5,7 @@ import com.example.myretrofit.R
 class Myhelperclass {
     companion object {
         const val BaseUrl = "https://api.openweathermap.org/data/2.5/"
+        const val TableName="Location_Table"
         val myIcons = mapOf(
             "01d" to "https://images.unsplash.com/photo-1516571999955-7ef6c7885017?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
             "02d" to "https://images.unsplash.com/photo-1613090956335-e9330f8ff73d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",

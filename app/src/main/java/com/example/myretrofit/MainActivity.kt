@@ -23,11 +23,14 @@ import androidx.work.*
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.example.myretrofit.bottomsheet.MyBottomSheet
 import com.example.myretrofit.databinding.ActivityMainBinding
 import com.example.myretrofit.mycontrol.MyViewFactory
 import com.example.myretrofit.mycontrol.MyViewModel
 import com.example.myretrofit.mywork.DisplayNotification
 import com.example.myretrofit.repos.Repository
+import com.example.myretrofit.room.RoomData
+import com.example.myretrofit.room.RoomDataInstance
 import com.example.myretrofit.uitls.MyDialog
 import com.example.myretrofit.uitls.MyHelperInter
 import com.example.myretrofit.uitls.Myhelperclass
@@ -39,18 +42,13 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     private lateinit var binding: ActivityMainBinding
     private lateinit var myViewModel: MyViewModel
     private lateinit var myViewFactory: MyViewFactory
-    private val repository by lazy {
-        Repository()
-    }
+    private lateinit var repository: Repository
     private val fadeAnimation by lazy {
         AnimationUtils.loadAnimation(this, R.anim.fade_in)
     }
-
-    companion object {
-        var notifyicon: String = "01d"
-        var notifydesc: String = ""
-        var notifytemp: String = "23 celsius"
-    }
+    private var notifyicon: String = "01d"
+    private var notifydesc: String = "checking for Weather"
+    private var notifytemp: String = "Updating.."
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,6 +107,8 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     }
 
     private fun myViewModelFun() {
+        val dao = RoomDataInstance.getInstance(applicationContext).daoAccessObj
+        repository = Repository(dao)
         myViewFactory = MyViewFactory(repository)
         myViewModel = ViewModelProvider(this, myViewFactory).get(MyViewModel::class.java)
         binding.myvarible = myViewModel
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(showWorker.id).observe(
             this,
             {
-                Log.i("MyWORK",it.state.toString())
+                Log.i("MyWORK", it.state.toString())
             })
 
     }
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
     private fun setmydata(string: String = "Ballia") {
         myViewModel.getsMyData(string).observe(this, {
             if (it.isSuccessful) {
-                var desc: String = "Not Data Found Main"
+                var desc = "Not Data Found"
                 it.body()?.weather?.iterator()?.forEach { op ->
                     desc = op.description
                     Myhelperclass.myIcons[op.icon]?.let { str -> setDemo(str) }
@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
                 myViewModel.setData(it, desc)
                 myViewModel.temp.observe(this, { temp ->
                     if (!temp.isNullOrEmpty())
-                        notifytemp = "$temp°C"
+                        notifytemp = "Feel's Like $temp°C"
                 })
                 NotifMyResult()
             } else {
@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         val myDialog = MyDialog()
         myDialog.show(supportFragmentManager, "MY dialog")
         myDialog.isCancelable = false
-        myDialog.myHelperInter=this
+        myDialog.myHelperInter = this
         /*if (MyDialog.myintend!=null)
         {
             val list: List<ResolveInfo> =
@@ -186,8 +186,13 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         val inflater = MenuInflater(this)
         inflater.inflate(R.menu.dot_menu, menu)
         val editMnu = menu?.findItem(R.id.edithis)
+        val delMnu = menu?.findItem(R.id.deletit)
         editMnu?.setOnMenuItemClickListener {
-            Toast.makeText(this, "you clicked me", Toast.LENGTH_SHORT).show()
+            myBottomsheet()
+            return@setOnMenuItemClickListener true
+        }
+        delMnu?.setOnMenuItemClickListener {
+            Toast.makeText(this, "Ruko Jara Sbar Kro", Toast.LENGTH_SHORT).show()
             return@setOnMenuItemClickListener true
         }
         return super.onCreateOptionsMenu(menu)
@@ -209,6 +214,12 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
         }
     }
 
+    private fun myBottomsheet() {
+        val myBottomSheet = MyBottomSheet()
+        myBottomSheet.myHelperInter=this
+        myBottomSheet.show(supportFragmentManager, "My_Bottom_Sheet")
+    }
+
     override fun callStart(intent: Intent?) {
         if (intent != null) {
             val list: List<ResolveInfo> =
@@ -216,11 +227,17 @@ class MainActivity : AppCompatActivity(), MyHelperInter {
                     intent,
                     PackageManager.MATCH_DEFAULT_ONLY
                 )
-
             if (list.isNotEmpty()) {
                 startActivity(intent)
             }
-        } /*else
-            Toast.makeText(this, "it is empty", Toast.LENGTH_SHORT).show()*/
+        }
+    }
+
+    override fun sendData(string: String) {
+        if (string.equals("enter the correct optioN",true))
+            Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+        else
+            Toast.makeText(this, "Successfully $string", Toast.LENGTH_SHORT).show()
+
     }
 }
