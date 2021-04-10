@@ -23,7 +23,8 @@ class MainActivity2 : AppCompatActivity() {
         supportActionBar?.hide()
         val array = arrayListOf(
             "01d",
-            "02d",
+            "01n",
+            "02n",
             "03d",
             "04d",
             "09d",
@@ -41,10 +42,9 @@ class MainActivity2 : AppCompatActivity() {
                     resources
                         .getDrawable(Myhelperclass.notificationIcons[io]!!, null)
                 )
-                delay(800)
+                delay(1000)
                 binding.imageView.startAnimation(fadeAnimation)
             }
-            delay(3000)
             val intent=Intent(this@MainActivity2,MainActivity::class.java)
             startActivity(intent)
             finish()
