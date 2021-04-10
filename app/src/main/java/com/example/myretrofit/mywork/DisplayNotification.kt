@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.myretrofit.MainActivity
+import com.example.myretrofit.MainActivity2
 import com.example.myretrofit.uitls.Myhelperclass
 
 
@@ -52,7 +53,7 @@ class DisplayNotification(context: Context, workerParams: WorkerParameters) :
                 }
             notificationManager?.createNotificationChannel(channel)
         }
-        val intent = Intent(applicationContext, MainActivity::class.java)
+        val intent = Intent(applicationContext, MainActivity2::class.java)
         val pendingIntent = TaskStackBuilder.create(applicationContext).run {
             addNextIntentWithParentStack(intent)
             getPendingIntent(101, PendingIntent.FLAG_UPDATE_CURRENT)

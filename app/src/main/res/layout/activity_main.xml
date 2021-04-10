@@ -48,6 +48,7 @@
             android:background="@drawable/myradius"
             android:backgroundTint="@color/white"
             android:elevation="5dp"
+            android:fontFamily="@font/allerta"
             android:iconifiedByDefault="true"
             android:queryHint="City name"
             app:layout_constraintLeft_toLeftOf="@id/myserchview"
@@ -77,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="@={myvarible.temp}"
+                    android:fontFamily="@font/allerta"
                     android:textColor="@color/white"
                     android:textSize="100sp" />
 
@@ -89,6 +91,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="O"
+                    android:fontFamily="@font/allerta"
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     android:textStyle="normal"
@@ -102,6 +105,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_toRightOf="@id/mynuber"
                     android:gravity="center"
+                    android:fontFamily="@font/allerta"
                     android:text="C"
                     android:textColor="@color/white"
                     android:textSize="70sp"
@@ -117,6 +121,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
+                android:fontFamily="@font/allerta"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -133,6 +138,7 @@
                     android:text="@={myvarible.maxTemp}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:fontFamily="@font/allerta"
                     android:textStyle="bold" />
 
                 <TextView
@@ -143,6 +149,7 @@
                     android:layout_toRightOf="@id/max"
                     android:gravity="center"
                     android:text="o"
+                    android:fontFamily="@font/allerta"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -153,6 +160,7 @@
                     android:layout_toRightOf="@id/deg"
                     android:gravity="center"
                     android:text="C"
+                    android:fontFamily="@font/allerta"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -165,6 +173,7 @@
                     android:text="@={myvarible.minTemp}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:fontFamily="@font/allerta"
                     android:textStyle="bold" />
 
                 <TextView
@@ -175,6 +184,7 @@
                     android:layout_toRightOf="@id/min"
                     android:gravity="center"
                     android:text="o"
+                    android:fontFamily="@font/allerta"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -184,6 +194,7 @@
                     android:layout_toRightOf="@id/degsec"
                     android:gravity="center"
                     android:text="C"
+                    android:fontFamily="@font/allerta"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -196,6 +207,7 @@
                     android:text="@={myvarible.press}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:fontFamily="@font/allerta"
                     android:textStyle="bold" />
 
                 <TextView
@@ -206,6 +218,7 @@
                     android:layout_marginTop="34dp"
                     android:text="@={myvarible.Humid}"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/allerta"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -217,6 +230,7 @@
                     android:layout_marginTop="34dp"
                     android:text="@={myvarible.windspeed}"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/allerta"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -228,6 +242,7 @@
                     android:layout_marginTop="34dp"
                     android:text="@={myvarible.gustWind}"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/allerta"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -239,6 +254,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@id/smallc"
                     android:gravity="right"
+                    android:fontFamily="@font/allerta"
                     android:text="@={myvarible.countryname}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
@@ -253,6 +269,7 @@
                     android:layout_marginTop="34dp"
                     android:layout_toRightOf="@id/min"
                     android:gravity="right"
+                    android:fontFamily="@font/allerta"
                     android:text="@={myvarible.cityname}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
@@ -267,6 +284,7 @@
                     android:layout_marginTop="34dp"
                     android:layout_toRightOf="@id/press"
                     android:gravity="right"
+                    android:fontFamily="@font/allerta"
                     android:text="@={myvarible.lati}"
                     android:textColor="@color/white"
                     android:textSize="15sp"
@@ -282,6 +300,7 @@
                     android:layout_toRightOf="@id/humid"
                     android:gravity="right"
                     android:text="@={myvarible.lon}"
+                    android:fontFamily="@font/allerta"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
