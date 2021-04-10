@@ -1,7 +1,7 @@
 # Android Project
 ## _The Weather App, Kotlin_
 
-This App is Made to check Users city weather And provide all the feature need to make Featch Weather details,
+This App is Made to check User's city weather And provide all the feature need to make Fetch Weather details,
 
 The App is Design In Kotlin,
 ### Implementions
