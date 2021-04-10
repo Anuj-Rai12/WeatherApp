@@ -1,5 +1,7 @@
 package com.example.myretrofit.bottomsheet
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +22,7 @@ class MyBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = DataBindingUtil.inflate(inflater, R.layout.mybottomsheet, container, false)
         MainActivity.cityname?.let {
             binding.mybottonsheettitile.text="Your CityName"

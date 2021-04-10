@@ -30,11 +30,8 @@ class MainActivity2 : AppCompatActivity() {
             "09d",
             "10d",
             "03n",
-            "04n",
             "09n",
-            "10n",
-            "11n",
-            "13n"
+            "11n"
         )
         CoroutineScope(Main).launch{
             array.forEach { io ->
@@ -42,7 +39,7 @@ class MainActivity2 : AppCompatActivity() {
                     resources
                         .getDrawable(Myhelperclass.notificationIcons[io]!!, null)
                 )
-                delay(1000)
+                delay(900)
                 binding.imageView.startAnimation(fadeAnimation)
             }
             val intent=Intent(this@MainActivity2,MainActivity::class.java)
