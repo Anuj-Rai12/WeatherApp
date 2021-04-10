@@ -22,7 +22,7 @@ The App is Design In Kotlin,
 - Update the User CityName Detail
 - Option to Delete the CityName
 
-This is My Weather App and is have implement all the knowledge which is learn
+This is My Weather App and i have implement all the knowledge which is learn
 If you Want then you can Download Apk and Try it.
 And if you feel it need some improvement the you can highlight it 
 Or You can help me to imporve it.
