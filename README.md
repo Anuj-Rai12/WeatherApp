@@ -41,7 +41,7 @@ Try this And if you feel it need some any imporvement then please inform me.
 ![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/SplachScreen.png?token=APA6NNAXPRCB3FR3YTE4YGDAOKBJA "Location Screen")
 
 
-![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/EnterScreen.png?token=APA6NNA5XVL44EPMKV2RRVLAOKBGO "Location Screen")
+![MainScreen](https://lh3.googleusercontent.com/pw/ACtC-3foCtpOtkfn3fyklW-pkVRCyXZXvgb-hvM_77Yw63C0tCXTg6ImPMq56DlhzfRR2NX7cWgX5bIqgD9FTYI1Y9TRo1JZZHXKxmAXpXxjtkwhBpWr5BoOPomVrI92RGYpYSXL1-D4dA_vANXyhL9LBUhF=w669-h903-no?authuser=0 "Location Screen")
 
 ![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/MainSrc.png?token=APA6NNERODPTJZYAKMDCLPLAOKBHK "Main Screen")
 
