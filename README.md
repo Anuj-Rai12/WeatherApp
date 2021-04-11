@@ -31,8 +31,20 @@ Or You can help me to imporve it.
 
 ## Installation
 
-Weather App Download Link [Download Me](https://drive.google.com/file/d/1iQMO-DbM2Emg89vSjDgw2gyHgToWCXOD/view?usp=sharing "Click Here to Download App") v1.1.0 Ready to install.
+Weather App Download Link [Download Me](https://drive.google.com/file/d/1kJF8n1VbhLhdCyxByFYYrurxFg-RUIu4/view?usp=sharing "Click Here to Download App") v1.1.0 Ready to install.
 
 Try this And if you feel it need some any imporvement then please inform me. 
 
 # Devloped By me.
+
+# Preview
+![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/SplachScreen.png?token=APA6NNAXPRCB3FR3YTE4YGDAOKBJA "Location Screen")
+
+
+![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/EnterScreen.png?token=APA6NNA5XVL44EPMKV2RRVLAOKBGO "Location Screen")
+
+![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/MainSrc.png?token=APA6NNERODPTJZYAKMDCLPLAOKBHK "Main Screen")
+
+![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/Notification.png?token=APA6NNHVFSF2KTOIPCGH5A3AOKBIK "Notification Screen")
+
+![MainScreen](https://raw.githubusercontent.com/Anuj-Rai12/anuj-rai/master/UpdateScr.png?token=APA6NNFQWQ2EHNWNQ3X23JTAOKBJO "Update Screen")
