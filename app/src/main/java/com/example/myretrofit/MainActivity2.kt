@@ -1,9 +1,11 @@
 package com.example.myretrofit
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.example.myretrofit.databinding.ActivityMain2Binding
 import com.example.myretrofit.uitls.Myhelperclass
@@ -17,6 +19,7 @@ class MainActivity2 : AppCompatActivity() {
     private val fadeAnimation by lazy {
         AnimationUtils.loadAnimation(this, R.anim.fade_in)
     }
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main2)
